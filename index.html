@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Grade Calculator</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eaf0f8;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .container {
+            background: white;
+            width: 320px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px #aaa;
+        }
+
+        h1 {
+            color: #2563eb;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #15803d;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Grade Calculator</h1>
+
+        <p>Enter student details below</p>
+
+        <input type="text" id="name"
+        placeholder="Student Name">
+
+        <input type="number" id="math"
+        placeholder="Math Marks (0-100)">
+
+        <input type="number" id="english"
+        placeholder="English Marks (0-100)">
+
+        <input type="number" id="science"
+        placeholder="Science Marks (0-100)">
+
+        <button onclick="calculateGrade()">
+            Calculate Grade
+        </button>
+
+        <div id="result"></div>
+
+    </div>
+
+    <script>
+        function calculateGrade() {
+
+            let name = document.getElementById("name").value;
+
+            let math = Number(document.getElementById("math").value);
+            let english = Number(document.getElementById("english").value);
+            let science = Number(document.getElementById("science").value);
+
+            let result = document.getElementById("result");
+
+            if (name.trim() === "" ||
+                document.getElementById("math").value === "" ||
+                document.getElementById("english").value === "" ||
+                document.getElementById("science").value === "") {
+
+                result.innerHTML = "Please fill in all fields.";
+                result.style.color = "red";
+                return;
+            }
+
+            if ([math, english, science].some(
+                mark => !Number.isFinite(mark) ||
+                mark < 0 || mark > 100)) {
+
+                result.innerHTML = "Marks must be between 0 and 100.";
+                result.style.color = "red";
+                return;
+            }
+
+            let average = (math + english + science) / 3;
+
+            let grade;
+
+            if (average >= 80) {
+                grade = "A";
+            } else if (average >= 70) {
+                grade = "B";
+            } else if (average >= 60) {
+                grade = "C";
+            } else if (average >= 50) {
+                grade = "D";
+            } else {
+                grade = "F";
+            }
+
+            result.style.color = "green";
+
+            result.innerHTML =
+                "Student: " + name +
+                "<br>Average: " + average.toFixed(2) +
+                "<br>Grade: " + grade;
+        }
+    </script>
+
+</body>
+</html>
